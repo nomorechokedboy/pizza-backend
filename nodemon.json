@@ -1,0 +1,4 @@
+{
+  "ext": "ts js json",
+  "ignore": ["*.test.js", "node_modules/*"]
+}
