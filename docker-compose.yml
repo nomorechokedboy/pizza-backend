@@ -1,0 +1,51 @@
+version: '3.0'
+# volumes:
+#   mongo-data-stikinote:
+services:
+  # mongo:
+  #   image: mongo:4.0
+  #   volumes:
+  #     - mongo-data-stikinote:/data/db
+  #     - .docker/backup:/backup
+  #   # env_file: ./mongod.env
+  #   ports:
+  #     - 27017:27017
+
+  # reds:
+  #   image: redis:5-alpine
+  #   volumes:
+  #     - .docker/redis-data:/data
+  #   restart: unless-stopped
+
+  app:
+    image: pizza-api:dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+      - /app/node_modules/
+    env_file:
+      - .env
+    ports:
+      - 5001:5001
+    # restart: unless-stopped
+    # depends_on:
+    #   - mongo
+    # - redis
+  # adminmongo:
+  #   image: "mrvautin/adminmongo"
+  #   ports:
+  #     - 1235:1234
+  #   environment:
+  #     - HOST=0.0.0.0
+#     networks:
+#       - italian-gang_default
+
+# networks:
+#   italian-gang_default:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 172.24.0.0/16
+#           gateway: 172.24.0.1
