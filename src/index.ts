@@ -4,7 +4,7 @@ import cors, { CorsOptions } from 'cors';
 import { PORT, MORGAN } from './config/env';
 import { Server } from 'http';
 import connectDb from './config/db';
-import { productRouter } from './pizza/router';
+import { productRouter } from './product/router';
 
 const CORS_WHITELIST = ['http://localhost:5001/', 'http://localhost:5000/'];
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { MONGODB } from '../env';
-import Product from '../../pizza/model';
+import Product from '../../product/model';
 
 export default function connectDb() {
   mongoose
