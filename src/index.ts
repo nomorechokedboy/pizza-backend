@@ -4,7 +4,8 @@ import cors, { CorsOptions } from 'cors';
 import { PORT, MORGAN } from './config/env';
 import { Server } from 'http';
 import connectDb from './config/db';
-import { productRouter } from './product/router';
+import productRouter from './product/router';
+import userRouter from './user/router';
 
 const CORS_WHITELIST = ['http://localhost:5001/', 'http://localhost:5000/'];
 
@@ -31,6 +32,7 @@ if (MORGAN === '1') {
 }
 
 app.use('/api/v1/product', productRouter);
+app.use('/api/v1/user', userRouter);
 app.use('/', (_: Request, res: Response) => res.send('Hello cai dmm luon'));
 
 http.on('error', (e) => {

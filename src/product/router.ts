@@ -1,7 +1,7 @@
 import express from 'express';
 import * as controller from './controller';
-const router = express.Router();
+const productRouter = express.Router();
 
-router.get('/', controller.get_all);
+productRouter.get('/', controller.get_all);
 
-export { router as productRouter };
+export default productRouter;

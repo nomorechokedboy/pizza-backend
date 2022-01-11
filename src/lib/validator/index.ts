@@ -1,8 +1,10 @@
 import Validator from 'validatorjs';
 import mongoose from 'mongoose';
 
-export default Validator.register(
+Validator.register(
   'ObjectId',
-  (value: any, requiment, attribute) => mongoose.Types.ObjectId.isValid(value),
+  (value: any, _requiment, attribute) => mongoose.Types.ObjectId.isValid(value),
   'The :attribute is not ObjectId',
 );
+
+export default Validator;

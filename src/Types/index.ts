@@ -24,3 +24,13 @@ export type UserRequest = Request<
   UserReqBody,
   ReqQuery
 >;
+
+export interface UserPayload {
+  _id: string;
+  role: string;
+}
+
+export interface LoginRequestBody {
+  email: string;
+  password: string;
+}
