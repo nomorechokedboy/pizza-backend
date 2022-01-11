@@ -3,22 +3,21 @@ import bcrypt from 'bcrypt';
 import Validator from '../lib/validator';
 import User from './model';
 import { LoginRequestBody, UserReqBody } from '../Types';
-import { SERVER_ERROR, WRONG_USER, LOGIN_RULES as rules } from '../constants';
+import { SERVER_ERROR, WRONG_USER } from '../constants';
 import genToken from '../lib/jwt';
-import { log } from 'console';
 
 export const register = async (req: Request, res: Response) => {
   const { email, password, phoneNumber, fullName } = req.body as UserReqBody;
   const data = { email, password, fullName, phoneNumber };
 
-  const registerRules = {
+  /* const registerRules = {
     ...rules,
     fullName: 'required|min:5|max:25',
     phoneNumber: 'required|min:10|max:11',
   };
 
   const validation = new Validator(data, registerRules);
-  if (validation.fails()) return res.status(400).json(validation.errors.all());
+  if (validation.fails()) return res.status(400).json(validation.errors.all()); */
 
   try {
     const find = await User.findOne({ email });
@@ -45,8 +44,8 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body as LoginRequestBody;
 
-  const validation = new Validator({ email, password }, rules);
-  if (validation.fails()) return res.status(400).json(validation.errors.all());
+  /* const validation = new Validator({ email, password }, rules);
+  if (validation.fails()) return res.status(400).json(validation.errors.all()); */
 
   try {
     const user = await User.findOne({ email });
