@@ -27,7 +27,7 @@ jobs:
       - name: npm ci, build and test
         run: |
           yarn 
-          yarn eslint
+          # yarn eslint
           # yarn run build --if-present
           # yarn test
 
