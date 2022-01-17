@@ -1,4 +1,4 @@
 FROM nomorechokedboy/node:14-builder as builder
 
-FROM nomorechokedboy/node:14-runtime-dev
+FROM nomorechokedboy/node:14-dev
 # docker build -f Dockerfile.dev -t pizza-api:dev .

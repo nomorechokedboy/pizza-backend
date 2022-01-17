@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-import { SECRET_KEY } from '../config/env';
+import { SECRET_KEY } from '../../config/env';
 
 interface UserPayload extends JwtPayload {
   email: string;

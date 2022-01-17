@@ -1,0 +1,91 @@
+name: CI/CD workflows
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+      - 'index.ts'
+      - 'src/index.ts'
+
+jobs:
+  push-test-deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm ci, build and test
+        run: |
+          yarn 
+          yarn eslint
+          # yarn run build --if-present
+          # yarn test
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+
+      - name: Cache Docker Image Layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        id: docker_build
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-project:pizza-api-prod
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Verify
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - uses: okteto/context@latest
+        with:
+          token: ${{secrets.OKTETO_TOKEN}}
+
+      - name: 'Activate Namespace'
+        uses: okteto/namespace@latest
+        with:
+          namespace: api-nomorechokedboy
+
+      - name: 'Trigger the pipeline'
+        uses: okteto/pipeline@latest
+        with:
+          name: fahasa-replica
+          timeout: 8m
+
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '30s'
+
+      - name: Verify deploy
+        uses: srt32/uptime@master
+        with:
+          url-to-hit: 'https://pizza-api-nomorechokedboy.cloud.okteto.net'
+          expected-statuses: '200'

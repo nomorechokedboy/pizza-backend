@@ -7,7 +7,11 @@ import connectDb from './config/db';
 import productRouter from './product/router';
 import userRouter from './user/router';
 
-const CORS_WHITELIST = ['http://localhost:5001/', 'http://localhost:5000/'];
+const CORS_WHITELIST = [
+  'http://localhost:5001/',
+  'http://localhost:5000/',
+  'https://pizza-api-nomorechokedboy.cloud.okteto.net',
+];
 
 const app = express();
 const http: Server = require('http').createServer(app);
