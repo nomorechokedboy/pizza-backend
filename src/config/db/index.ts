@@ -13,10 +13,10 @@ export default function connectDb() {
       // seed product
 
       /* const products = await Product.create(require('./product.json'))
-        .then(() => {
-          console.log('seed success');
-        })
-        .catch((e) => console.error(e)); */
+      .then(() => {
+        console.log('seed success');
+      })
+      .catch((e) => console.error(e)); */
     })
     .catch((e: any) => console.error(e));
 }

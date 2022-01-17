@@ -21,7 +21,7 @@ export default function isAdmin(
     const decoded = jwt.verify(token!, SECRET_KEY!) as UserPayload;
     req.user = decoded;
 
-    if (decoded.role! === 'admin') next();
+    if (decoded.role === 'admin') next();
     throw Error('Authorized failed!');
   } catch (e) {
     console.error(e);
