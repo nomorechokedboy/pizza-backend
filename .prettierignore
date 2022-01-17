@@ -1,10 +1,10 @@
-.env
+.env*
 build
 node_modules
-public
-yarn.lock
+yarn*
 .dockerignore
 .husky
 .prettierignore
 Dockerfile*
-.gitignore
+.git*
+.eslint*

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 Validator.register(
   'ObjectId',
-  (value: any, _requiment, attribute) => mongoose.Types.ObjectId.isValid(value),
+  (value: any) => mongoose.Types.ObjectId.isValid(value),
   'The :attribute is not ObjectId',
 );
 

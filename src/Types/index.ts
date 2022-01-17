@@ -8,22 +8,14 @@ export interface ProductBasic {
   type: string;
 }
 
-interface ReqDictionary {}
-interface ResBody {}
 export interface UserReqBody {
   email: string;
   password: string;
   phoneNumber: string;
   fullName: string;
 }
-interface ReqQuery {}
 
-export type UserRequest = Request<
-  ReqDictionary,
-  ResBody,
-  UserReqBody,
-  ReqQuery
->;
+export type UserRequest = Request<unknown, unknown, UserReqBody, unknown>;
 
 export interface UserPayload {
   _id: string;

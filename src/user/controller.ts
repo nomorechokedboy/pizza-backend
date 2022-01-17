@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import Validator from '../lib/validator';
-import User from './model';
-import { LoginRequestBody, UserReqBody } from '../Types';
+import { NextFunction, Request, Response } from 'express';
 import { SERVER_ERROR, WRONG_USER } from '../constants';
 import genToken from '../lib/jwt';
+import { LoginRequestBody, UserReqBody } from '../Types';
+import User from './model';
 
 export const register = async (req: Request, res: Response) => {
   const { email, password, phoneNumber, fullName } = req.body as UserReqBody;
@@ -51,13 +50,13 @@ export const login = async (req: Request, res: Response) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ error: WRONG_USER });
 
-    const match = await bcrypt.compare(password, user?.password!);
+    const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(404).json({ error: WRONG_USER });
 
-    const { _id, role } = user!;
+    const { _id: id, role } = user;
 
     return res.json({
-      token: genToken({ _id, role }),
+      token: genToken({ _id: id, role }),
     });
   } catch (e) {
     console.error(e);

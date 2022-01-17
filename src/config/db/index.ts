@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { MONGODB } from '../env';
-import Product from '../../product/model';
 
 export default function connectDb() {
   mongoose
@@ -8,7 +7,7 @@ export default function connectDb() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as mongoose.ConnectOptions)
-    .then(async (_: typeof mongoose) => {
+    .then(async () => {
       console.log('Connect Mongodb Success!');
 
       // seed product

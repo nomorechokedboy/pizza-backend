@@ -1,14 +1,14 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt, { Jwt, JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { SECRET_KEY } from '../../config/env';
 
-interface UserPayload extends JwtPayload {
+interface UserPayload {
   email: string;
   role: string;
 }
 
 interface AdminRequest extends Request {
-  user: any;
+  user: UserPayload;
 }
 
 export default function isAdmin(
@@ -21,10 +21,11 @@ export default function isAdmin(
     const decoded = jwt.verify(token!, SECRET_KEY!) as UserPayload;
     req.user = decoded;
 
-    if (decoded.role === 'admin') next();
+    if (decoded.role! === 'admin') next();
     throw Error('Authorized failed!');
   } catch (e) {
     console.error(e);
-    return res.status(401).json({ error: 'Authorized failed!' });
+    res.status(401).json({ error: 'Authorized failed!' });
+    next(e);
   }
 }

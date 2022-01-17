@@ -1,2 +1,2 @@
-export const SERVER_ERROR: string = 'Server Error #';
-export const WRONG_USER: string = 'Wrong email or password!';
+export const SERVER_ERROR = 'Server Error #';
+export const WRONG_USER = 'Wrong email or password!';

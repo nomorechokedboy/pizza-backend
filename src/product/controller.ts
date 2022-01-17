@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { SERVER_ERROR } from '../constants/messages';
 import Product from './model';
 
-export const get_all = (_: Request, res: Response) => {
+export const getAll = (_: Request, res: Response) => {
   Product.find({})
     .then((products) => res.json(products))
     .catch((e) => {
