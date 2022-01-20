@@ -23,10 +23,13 @@ services:
       - ./:/app
       - /app/node_modules/
     environtment:
-      - PORT=${PORT}
+      - PORT=$PORT
       - MONGODB=$MONGO_HOST://$MONGO_USER:$MONGO_PASSWORD@stikinote.bzd5w.mongodb.net/$PIZZA_DB?retryWrites=true&w=majority
       - MORGAN=$MORGAN
       - NODE_ENV=production
+      - PIZZA_DB=$PIZZA_DB
+      - refreshTokenKey=$refreshTokenKey
+      - SECRET_KEY=$SECRET_KEY
     ports:
       - '${PORT}:${PORT}'
     # restart: unless-stopped
