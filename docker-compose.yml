@@ -22,7 +22,7 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules/
-    environtment:
+    environment:
       - PORT=$PORT
       - MONGODB=$MONGO_HOST://$MONGO_USER:$MONGO_PASSWORD@stikinote.bzd5w.mongodb.net/$PIZZA_DB?retryWrites=true&w=majority
       - MORGAN=$MORGAN
