@@ -5,8 +5,9 @@ import { loginRules as rules } from '../../constants';
 export const register = (req: Request, res: Response, next: NextFunction) => {
   const registerRules = {
     ...rules,
-    fullName: 'required|min:5|max:25',
-    phoneNumber: 'required|min:10|max:11',
+    fullName: 'required|min:8|max:30',
+    phoneNumber: 'required|min:10|max:12',
+    cPassword: 'same:password',
   };
 
   const validation = new Validator(req.body, registerRules);

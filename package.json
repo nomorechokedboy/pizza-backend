@@ -2,19 +2,19 @@
   "name": "api-template",
   "version": "1.0.0",
   "description": "template for express restful api of myself",
-  "main": "index.ts",
+  "main": "index.js",
   "author": "Duong Le",
   "license": "MIT",
   "private": true,
   "scripts": {
     "build": "tsc",
     "watch": "nodemon --legacy-watch ./build",
-    "dev": "concurrently \"tsc -w\" \"yarn watch\"",
+    "dev": "nodemon --legacy-watch index.ts",
     "pre-commit": "lint-staged",
     "prettier:fix": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prerestart": "yarn build",
-    "start": "nodemon ./build/index.js",
+    "start": "node ./build",
     "lint": "eslint --ignore-path .eslintignore --ext .ts ."
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.1",
     "morgan": "^1.10.0",
+    "redis": "^4.0.2",
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {
@@ -45,6 +46,7 @@
     "lint-staged": "^12.1.2",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.3"
   },
   "lint-staged": {

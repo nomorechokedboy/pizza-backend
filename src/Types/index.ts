@@ -15,14 +15,16 @@ export interface UserReqBody {
   fullName: string;
 }
 
-export type UserRequest = Request<unknown, unknown, UserReqBody, unknown>;
-
-export interface UserPayload {
-  _id: string;
-  role: string;
-}
-
 export interface LoginRequestBody {
   email: string;
   password: string;
+}
+
+export interface UserPayload {
+  id?: string;
+  role: string;
+}
+
+export interface UserRequest extends Request {
+  decoded?: UserPayload;
 }

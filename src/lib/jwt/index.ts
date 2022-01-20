@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { SECRET_KEY } from '../../config/env';
+import { refreshTokenKey, SECRET_KEY } from '../../config/env';
 import { UserPayload } from '../../Types';
 
 export default function genToken(payload: UserPayload) {
-  return jwt.sign(payload, SECRET_KEY!);
+  return jwt.sign(payload, SECRET_KEY!, { expiresIn: '10m' });
 }
+
+export const genRefreshToken = (payload: UserPayload) =>
+  jwt.sign(payload, refreshTokenKey!, { expiresIn: '2h' });

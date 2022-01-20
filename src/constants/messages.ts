@@ -1,2 +1,3 @@
-export const SERVER_ERROR = 'Server Error #';
-export const WRONG_USER = 'Wrong email or password!';
+export const serverError = 'Server Error #';
+export const wrongUser = 'Wrong email or password!';
+export const authFailed = 'Authorized failed!';
