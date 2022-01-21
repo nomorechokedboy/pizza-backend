@@ -17,7 +17,7 @@ services:
   #     - .docker/redis-data:/data
   #   restart: unless-stopped
 
-  pizza:
+  pizza-api:
     image: nomorechokedboy/web-project:pizza-api-prod
     volumes:
       - ./:/app
