@@ -29,6 +29,9 @@ services:
       - .env
     ports:
       - '${PORT}:${PORT}'
+    networks:
+      test:
+        ipv4_address: 172.20.1.2
     # restart: unless-stopped
     # depends_on:
     #   - mongo
@@ -42,10 +45,10 @@ services:
 #     networks:
 #       - italian-gang_default
 
-# networks:
-#   italian-gang_default:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.24.0.0/16
-#           gateway: 172.24.0.1
+networks:
+  test:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.1.0/16
+          gateway: 172.20.1.1
