@@ -1,10 +1,4 @@
-FROM node:14.17-alpine3.14
+FROM nomorechokedboy/node:14-builder as builder
 
-WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install
-
-COPY . .
-
-CMD ["yarn", "dev"]
+FROM nomorechokedboy/node:14-dev
 # docker build -f Dockerfile.dev -t pizza-api:dev .

@@ -1,0 +1,43 @@
+name: CD workflows
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - 'src/**'
+            - 'index.ts'
+            - 'src/index.ts'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout 
+              uses: actions/checkout@v2
+
+            - uses: okteto/context@latest
+              with:
+                  token: ${{secrets.OKTETO_TOKEN}}
+
+            - name: 'Activate Namespace'
+              uses: okteto/namespace@latest
+              with:
+                  name: nomorechokedboy
+
+            - name: 'Trigger the pipeline'
+              uses: okteto/pipeline@latest
+              with:
+                  name: pizza-api
+                  timeout: 8m
+
+            - name: Sleep for 90 seconds
+              uses: jakejarvis/wait-action@v0.1.0
+              with:
+                  time: '90s'
+
+            - name: Verify deploy
+              uses: srt32/uptime@master
+              with:
+                  url-to-hit: 'https://pizza-api-nomorechokedboy.cloud.okteto.net'
+                  expected-statuses: '200'

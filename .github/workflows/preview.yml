@@ -1,0 +1,39 @@
+name: Preview deploy
+on:
+  pull_request:
+    path:
+      - 'src/**'
+      - 'index.ts'
+      - 'src/index.ts'
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Context
+        uses: okteto/context@latest
+        with:
+          token: '${{ secrets.OKTETO_TOKEN }}'
+          
+      - name: Deploy the preview environment
+        uses: okteto/deploy-preview@latest
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          name: pr-${{ github.event.number }}-nomorechokedboy
+
+      - name: Sleep for 90 seconds
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '90s'
+
+      - name: Verify deploy preview
+        uses: srt32/uptime@master
+        with:
+          url-to-hit: 'https://pizza-api-pr-${{ github.event.number }}-nomorechokedboy.cloud.okteto.net/'
+          expected-statuses: '200'
+

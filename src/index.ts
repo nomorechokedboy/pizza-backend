@@ -4,12 +4,18 @@ import cors, { CorsOptions } from 'cors';
 import { PORT, MORGAN } from './config/env';
 import { Server } from 'http';
 import connectDb from './config/db';
-import { productRouter } from './pizza/router';
+import productRouter from './product/router';
+import userRouter from './user/router';
+import * as http from 'http';
 
-const CORS_WHITELIST = ['http://localhost:5001/', 'http://localhost:5000/'];
+const CORS_WHITELIST = [
+  'http://localhost:5001/',
+  'http://localhost:5000/',
+  'https://pizza-api-nomorechokedboy.cloud.okteto.net',
+];
 
 const app = express();
-const http: Server = require('http').createServer(app);
+const server: Server = http.createServer(app);
 
 connectDb();
 
@@ -31,12 +37,13 @@ if (MORGAN === '1') {
 }
 
 app.use('/api/v1/product', productRouter);
+app.use('/api/v1/user', userRouter);
 app.use('/', (_: Request, res: Response) => res.send('Hello cai dmm luon'));
 
-http.on('error', (e) => {
+server.on('error', (e) => {
   if (e) throw e;
 });
 
-http.listen(PORT || 5001, () => {
+server.listen(PORT || 5001, () => {
   console.log(`Stikinote api on http://localhost:${PORT}`);
 });
